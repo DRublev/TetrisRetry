@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TetrisRetry
 {
@@ -6,7 +7,11 @@ namespace TetrisRetry
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			List<String> toRender = new List<string> { "Hello, world", "This is ConsoleRenderer" };
+
+			ConsoleRenderer.Render(toRender);
+
+			Console.ReadLine();
 		}
 	}
 }
