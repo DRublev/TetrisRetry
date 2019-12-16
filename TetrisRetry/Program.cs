@@ -1,15 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Timers;
 
 namespace TetrisRetry
 {
 	class Program
 	{
+		private static void Update(object sender, ElapsedEventArgs args)
+		{
+			ConsoleRenderer.Render();
+		}
 		static void Main(string[] args)
 		{
-			List<String> toRender = new List<string> { "Hello, world", "This is ConsoleRenderer" };
+			Timer timer = new Timer();
+			timer.Interval = 1000;
+			timer.Elapsed += new ElapsedEventHandler(Update);
+			timer.Enabled = true;
 
-			ConsoleRenderer.Render(toRender);
+			GC.KeepAlive(timer);
+
+			Field field = new Field();
 
 			Console.ReadLine();
 		}
