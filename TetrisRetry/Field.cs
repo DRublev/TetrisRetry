@@ -1,41 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using TetrisRetry.EventSystem;
 
 namespace TetrisRetry
 {
-	public class Field
+	public partial class Field
 	{
-		private Field instance;
-		public Field Instance
+		public static void InitFieldEvent(List<String> field)
 		{
-			get
-			{
-				if(instance == null)
-				{
-					instance = new Field();
-				}
-
-				return instance;
-			}
+			CustomEventHandler.Instance.Call("InitFieldEvent", new object[] { field });
 		}
-
-		private Field()
+	}
+	public partial class Field
+	{
+		public Field()
 		{
 			Init();
 		}
 
 		private int height = Config.FIELD_HEIGHT;
 		private int width = Config.FIELD_WIDTH;
-		private LinkedList<String> field = new LinkedList<String>();
+		private List<String> field = new List<String>();
 
 		private void Init()
 		{
-			String empty = new string(' ', width);
+			String empty = new String('-', width);
 
 			for(int i = 0; i < height; i++)
 			{
-				field.AddLast(empty);
+				field.Add(empty);
 			}
+
+			InitFieldEvent(field);
 		}
 	}
 }
