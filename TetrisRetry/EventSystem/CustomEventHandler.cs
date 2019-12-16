@@ -90,7 +90,7 @@ namespace TetrisRetry.EventSystem
 			{
 				return;
 			}
-
+			Console.WriteLine("Event call");
 			List<MessageHandlerData> handlers = (List<MessageHandlerData>) subscribers[messageId];
 
 			for(int i = 0; i < handlers.Count; i++)

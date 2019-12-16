@@ -4,7 +4,7 @@ using TetrisRetry.EventSystem;
 
 namespace TetrisRetry
 {
-	public class FieldEventManager
+	public class FieldEventManager : EventSubscriber
 	{
 		[CustomEventHandler.MessageHandler]
 		public void OnInitFieldEvent(List<String> frame)

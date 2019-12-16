@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace TetrisRetry.EventSystem
 {
@@ -14,7 +15,7 @@ namespace TetrisRetry.EventSystem
 		public EventSubscriber()
 		{
 			MethodInfo[] methods = this.GetType().GetMethods(flags);
-
+			Console.WriteLine(methods.Length);
 			foreach(MethodInfo info in methods)
 			{
 				if(info.GetCustomAttributes(typeof(CustomEventHandler.MessageHandler), true).Length != 0)
@@ -27,7 +28,6 @@ namespace TetrisRetry.EventSystem
 		protected void Subscribe(string methodName)
 		{
 			MethodInfo info = this.GetType().GetMethod(methodName, flags);
-
 			CustomEventHandler.Instance.RegisterHandler(this, info);
 		}
 

@@ -13,6 +13,8 @@ namespace TetrisRetry
 	}
 	public partial class Field
 	{
+		protected FieldEventManager eventManager = new FieldEventManager();
+
 		public Field()
 		{
 			Init();
