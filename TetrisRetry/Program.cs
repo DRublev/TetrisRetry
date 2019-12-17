@@ -3,24 +3,25 @@ using System.Timers;
 
 namespace TetrisRetry
 {
-	class Program
-	{
-		private static void Update(object sender, ElapsedEventArgs args)
-		{
-			ConsoleRenderer.Render();
-		}
-		static void Main(string[] args)
-		{
-			Timer timer = new Timer();
-			timer.Interval = 1000;
-			timer.Elapsed += new ElapsedEventHandler(Update);
-			timer.Enabled = true;
+				class Program
+				{
+								private static void Update(object sender, ElapsedEventArgs args)
+								{
+												ConsoleRenderer.Render();
+								}
 
-			GC.KeepAlive(timer);
+								static void Main(string[] args)
+								{
+												Timer timer = new Timer();
+												timer.Interval = 1000;
+												timer.Elapsed += new ElapsedEventHandler(Update);
+												timer.Enabled = true;
 
-			Field field = new Field();
+												GC.KeepAlive(timer);
 
-			Console.ReadLine();
-		}
-	}
+												Field field = new Field();
+
+												Console.ReadLine();
+								}
+				}
 }

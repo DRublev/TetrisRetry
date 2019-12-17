@@ -16,7 +16,8 @@ namespace TetrisRetry
 												CustomEventHandler.Instance.Call("FieldUpdateEvent", new object[] { field });
 								}
 				}
-				public partial class Field
+
+											public partial class Field
 				{
 								protected FieldEventManager eventManager = new FieldEventManager();
 
@@ -46,8 +47,7 @@ namespace TetrisRetry
 								{
 												Figure fig = new Figure();
 
-												List<int> x = new List<int>();
-												List<int> y = new List<int>();
+												List<Coordinates> coords = new List<Coordinates>();
 
 												for(int i = 0; i < fig.figure.Count; i++)
 												{
@@ -55,29 +55,30 @@ namespace TetrisRetry
 																{
 																				if(fig.figure[i][j] == Config.FILLING)
 																				{
-																								x.Add(((width - fig.figure[0].Length) / 2) + j);
-																								y.Add(height - i - 1);
+																								int x = ((width - fig.figure[0].Length) / 2) + j;
+																								int y = height - i - 1;
+																								coords.Add(new Coordinates(x, y));
 																				}
 																}
 												}
 
-												AddToField(new List<int[]>() { x.ToArray(), y.ToArray() });
+												AddToField(coords);
 
 												FieldUpdateEvent(field);
 								}
 
-								private void AddToField(List<int[]> coords)
+								private void AddToField(List<Coordinates> coords)
 								{
-												int[] x = coords[0];
-												int[] y = coords[1];
 
-												for(int i = 0; i < x.Length; i++)
+												for(int i = 0; i < coords.Count; i++)
 												{
-																char[] row = field[y[i]].ToCharArray();
-																row[x[i]] = Config.FILLING;
-																field[y[i]] = new String(row);
+																char[] row = field[coords[i].y].ToCharArray();
+																row[coords[i].x] = Config.FILLING;
+																field[coords[i].y] = new String(row);
 												}
 								}
+
+
 
 								private void Move(int fromX, int fromY, int toX, int toY)
 								{

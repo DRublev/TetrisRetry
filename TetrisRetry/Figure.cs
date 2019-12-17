@@ -3,14 +3,27 @@ using System.Collections.Generic;
 
 namespace TetrisRetry
 {
+				public struct Coordinates
+				{
+								public int x;
+								public int y;
+
+								public Coordinates(int x, int y)
+								{
+												this.x = x;
+												this.y = y;
+								}
+				}
+
 				enum FigureTypes
 				{
 								I, T, J, L, S, Z, O
 				}
+				
 				public class Figure
 				{
 								public List<String> figure { get; private set; } = new List<string>();
-								public List<int[]> Coords = new List<int[]>(); // Put here all figure blocks coords
+								public List<Coordinates> Coords = new List<Coordinates>(); // Put here all figure blocks coords
 
 								public Figure()
 								{
@@ -63,7 +76,7 @@ namespace TetrisRetry
 
 								public void AddCoords(int x, int y)
 								{
-												Coords.Add(new int[] { x, y });
+												Coords.Add(new Coordinates(x, y));
 								}
 				}
 }
