@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Timers;
 using TetrisRetry.EventSystem;
 
 namespace TetrisRetry
@@ -17,7 +18,7 @@ namespace TetrisRetry
 								}
 				}
 
-											public partial class Field
+				public partial class Field
 				{
 								protected FieldEventManager eventManager = new FieldEventManager();
 
@@ -29,6 +30,7 @@ namespace TetrisRetry
 								private int height = Config.FIELD_HEIGHT;
 								private int width = Config.FIELD_WIDTH;
 								private List<String> field = new List<String>();
+								private Figure currentFigure = null;
 
 								private void Init()
 								{
@@ -41,6 +43,7 @@ namespace TetrisRetry
 
 												InitFieldEvent(field);
 												AddFigure();
+												Config.GLOBAL_TIMER.Elapsed += new ElapsedEventHandler(MoveCurrentFigureDown);
 								}
 
 								private void AddFigure()
@@ -62,29 +65,72 @@ namespace TetrisRetry
 																}
 												}
 
+												fig.Coords = coords;
+
+												currentFigure = fig;
+
 												AddToField(coords);
+												FieldUpdateEvent(field);
+								}
+
+								private void AddToField(List<Coordinates> coords, char filling = Config.FILLING)
+								{
+												for(int i = 0; i < coords.Count; i++)
+												{
+																char[] row = field[coords[i].y].ToCharArray();
+																row[coords[i].x] = filling;
+																field[coords[i].y] = new String(row);
+												}
 
 												FieldUpdateEvent(field);
 								}
 
-								private void AddToField(List<Coordinates> coords)
+								private bool CanMove(List<Coordinates> coordsToCheck)
 								{
+												bool canMove = true;
 
-												for(int i = 0; i < coords.Count; i++)
-												{
-																char[] row = field[coords[i].y].ToCharArray();
-																row[coords[i].x] = Config.FILLING;
-																field[coords[i].y] = new String(row);
-												}
+
+
+												return canMove;
 								}
 
-
-
-								private void Move(int fromX, int fromY, int toX, int toY)
+								private void MoveCurrentFigureDown(object sender, ElapsedEventArgs args)
 								{
-												char[] row = field[toY].ToCharArray();
-												row[toX] = field[fromY][fromX];
-												field[toY] = new String(row);
+											/*	if(!CanMove(currentFigure.Coords))
+												{
+																AddFigure();
+																return;
+												}*/
+
+												List<Coordinates> oldCords = currentFigure.Coords;
+
+												for(int i = 0; i < currentFigure.Coords.Count; i++)
+												{
+																Coordinates cords = currentFigure.Coords[i];
+
+																if(cords.y - 1 >= 0)
+																{
+																				char[] row = field[cords.y].ToCharArray();
+																				row[cords.x] = ' ';
+																				field[cords.y] = new String(row);
+																				cords.y--;
+																}
+																else
+																{
+																				return;
+																}
+
+																currentFigure.Coords[i] = cords;
+																
+												}
+												AddToField(currentFigure.Coords);
+								}
+
+								private void Move(Coordinates from, Coordinates to)
+								{
+												char[] row = field[to.y].ToCharArray();
+												row[to.x] = field[from.y][from.x];
+												field[to.y] = new String(row);
 								}
 				}
 }

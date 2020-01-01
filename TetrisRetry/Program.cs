@@ -12,12 +12,11 @@ namespace TetrisRetry
 
 								static void Main(string[] args)
 								{
-												Timer timer = new Timer();
-												timer.Interval = 1000;
-												timer.Elapsed += new ElapsedEventHandler(Update);
-												timer.Enabled = true;
+												Config.GLOBAL_TIMER.Interval = 1000;
+												Config.GLOBAL_TIMER.Elapsed += new ElapsedEventHandler(Update);
+												Config.GLOBAL_TIMER.Enabled = true;
 
-												GC.KeepAlive(timer);
+												GC.KeepAlive(Config.GLOBAL_TIMER);
 
 												Field field = new Field();
 

@@ -23,7 +23,7 @@ namespace TetrisRetry
 				public class Figure
 				{
 								public List<String> figure { get; private set; } = new List<string>();
-								public List<Coordinates> Coords = new List<Coordinates>(); // Put here all figure blocks coords
+								public List<Coordinates> Coords { get; set; } = new List<Coordinates>(); // Put here all figure blocks coords
 
 								public Figure()
 								{
@@ -77,6 +77,11 @@ namespace TetrisRetry
 								public void AddCoords(int x, int y)
 								{
 												Coords.Add(new Coordinates(x, y));
+								}
+
+								public void AddCoords(Coordinates coords)
+								{
+												Coords.Add(coords);
 								}
 				}
 }
